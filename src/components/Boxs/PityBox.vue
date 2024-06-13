@@ -26,52 +26,54 @@ function changePity(person, game, pity) {
 </script>
 
 <template>
-<div class="container" v-if="pity">
-  <div class="gameBox" v-for="(person, personKey) in pity">
-    <span>{{ personKey }}</span>
-    <div class="testBox">
-      <div class="typeBox" v-for="(type, typeKey) in person">
-        <span>{{ typeKey }}</span>
-        <div class="pityBox">
-          <span class="color4">{{ type.star4 }}</span>
-          <span class="color5">{{ type.star5 }}</span>
+
+  <div class="container">
+    <span class="scrollText" v-if="!pity">Loading...</span>
+    <div class="personBox" v-if="pity" v-for="(person, personKey) in pity">
+      <span>{{ personKey }}</span>
+      <div class="testBox">
+        <div class="typeBox" v-for="(type, typeKey) in person">
+          <span>{{ typeKey }}</span>
+          <div class="pityBox">
+            <span class="color4">{{ type.star4 }}</span>
+            <span class="color5">{{ type.star5 }}</span>
+          </div>
+          <button class="plusButton" @click="pity[personKey][typeKey].star4 += 1; pity[personKey][typeKey].star5 += 1; changePity(personKey, game, pity[personKey])">+1</button>
+          <div class="buttonBox">
+            <button class="color4" @click="pity[personKey][typeKey].star4 = 0; changePity(personKey, game, pity[personKey])">
+              <img class="resetButton" :src="`./reset.png`" alt="reset">
+            </button>
+            <button class="color5" @click="pity[personKey][typeKey].star4 = 0; pity[personKey][typeKey].star5 = 0; changePity(personKey, game, pity[personKey])" >
+              <img class="resetButton" :src="`./reset.png`" alt="reset">
+            </button>
+          </div>
+          <span class="guarantee" v-if="pity[personKey][typeKey].guarantee !== ''" @click="pity[personKey][typeKey].guarantee = !pity[personKey][typeKey]. guarantee; changePity(personKey, game, pity[personKey])">{{ type.guarantee }}</span>
         </div>
-        <button class="plusButton" @click="pity[personKey][typeKey].star4 += 1; pity[personKey][typeKey].star5 += 1; changePity(personKey, game, pity[personKey])">+1</button>
-        <div class="buttonBox">
-          <button class="color4" @click="pity[personKey][typeKey].star4 = 0; changePity(personKey, game, pity[personKey])">
-            <img class="resetButton" :src="`./reset.png`" alt="reset">
-          </button>
-          <button class="color5" @click="pity[personKey][typeKey].star4 = 0; pity[personKey][typeKey].star5 = 0; changePity(personKey, game, pity[personKey])" >
-            <img class="resetButton" :src="`./reset.png`" alt="reset">
-          </button>
-        </div>
-        <span>{{ type.guarantee }}</span>
       </div>
     </div>
   </div>
-  <span class="scrollText" v-if="!pity">Loading...</span>
-</div>
 </template>
 
 <style scoped>
 .container {
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 150px;
-  overflow: hidden;
-}
-
-.gameBox {
+  position: absolute;
+  top: 45px;
+  left: 137px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 10px;
-  border: #333333 2px solid;
-  border-radius: 20px;
-  background-color: #333333;
+  justify-content: center;
+  background-color: #222324;
+  width: 200px;
+  border: solid 3px #787168;
+  border-top: 0;
+  border-radius: 0 0 15px 15px;
+}
+
+.personBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .testBox {
@@ -82,7 +84,9 @@ function changePity(person, game, pity) {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 7px;
   margin: 0 2px;
+  padding: 0 1px;
 }
 
 .pityBox {
@@ -98,20 +102,17 @@ function changePity(person, game, pity) {
 .plusButton {
   width: 100%;
   border: 0;
-  border-radius: 50px;
   background-color: #bbb;
 }
 
 .buttonBox {
   display: flex;
   width: 100%;
-  border-radius: 50px;
 }
 
 .buttonBox > button {
   width: 50%;
   border: 0;
-  border-radius: 50px;
 }
 
 button:hover {
@@ -133,10 +134,6 @@ button:hover {
 }
 
 .scrollText {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: rotate(90deg);
-}
 
+}
 </style>

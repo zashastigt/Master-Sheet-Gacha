@@ -29,7 +29,7 @@ function addToFilter(item, list) {
 
 <template>
 <div class="filters">
-  <ul :class="`elements ${listShown ? '' : 'elementHidden'}`">
+  <ul :class="{elements, elementsHidden: !listShown}">
     <FilterButton
       v-for="element in elements"
       :item="element"
@@ -70,7 +70,7 @@ function addToFilter(item, list) {
   background-color: #222324;
   border-style: solid;
   border-color: #787168;
-  width: fit-content;
+  width: 80px;
   flex-direction: column;
   margin: 0;
   position: fixed;

@@ -1,5 +1,4 @@
 <script setup>
-import {computed} from "vue";
 import {postData} from "@/data/postData.ts";
 
 const props = defineProps({
@@ -16,26 +15,6 @@ const props = defineProps({
   itemLink: String,
   itemElement: String,
   itemGroup: String
-})
-
-function ceColor(CE) {
-  if (CE.includes('6')) {
-    return 'all'
-  } else if(CE === '') {
-    return 'none'
-  } else {
-    return 'some'
-  }
-}
-
-const rarityColor = computed(() => {
-  if (props.item.rarity === 5) {
-    return 'rarityFiveStar'
-  } else if (props.item.rarity === 4) {
-    return 'rarityFourStar'
-  } else {
-    return 'rarityThreeStar'
-  }
 })
 
 function changeLevel(direction, name, CE, person) {
@@ -63,7 +42,7 @@ function changeLevel(direction, name, CE, person) {
         <img class="imgItem" alt="img" :src="itemImg">
       </a>
     </div>
-    <div :class="`rarityStrip ${rarityColor}`"></div>
+    <div class="rarityStrip" :class="{rarityThreeStar: item.rarity === 3, rarityFourStar: item.rarity === 4, rarityFiveStar: item.rarity === 5}"></div>
     <div class="info">
       <img v-if="listShown" class="element" alt="element" :src="itemElement">
       <img class="group" alt="group" :src="itemGroup">
@@ -71,7 +50,7 @@ function changeLevel(direction, name, CE, person) {
     <div class="itemCE">
       <div class="CE" v-if="dups" v-for="(CE, key) in dups[props.listShown ? 'Characters' : 'Weapons'][item.name]?.CE">
         <div class="personName">{{key}}</div>
-        <div class="CECount" :class="ceColor(CE)">{{CE}}</div>
+        <div class="CECount some" :class="{all: CE.includes('6'), none: CE === ''}">{{CE}}</div>
         <div class="buttons">
           <button class="up" @click="changeLevel(1, dups[props.listShown ? 'Characters' : 'Weapons'][item.name]?.Name, CE, key)" v-if="listShown ? !CE.includes('6') : !CE.includes('5')">+</button>
           <button class="down" @click="changeLevel(-1, dups[props.listShown ? 'Characters' : 'Weapons'][item.name]?.Name, CE, key)" v-if="CE !== ''">-</button>
@@ -218,12 +197,12 @@ function changeLevel(direction, name, CE, person) {
   border-radius: 0 10px 10px 0;
 }
 
-.CE .all {
-  background-color: #023a02;
-}
-
 .CE .some {
   background-color: green;
+}
+
+.CE .all {
+  background-color: #023a02;
 }
 
 .CE .none {
