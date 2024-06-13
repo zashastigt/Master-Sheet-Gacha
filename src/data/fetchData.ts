@@ -52,7 +52,6 @@ export const useGachaStore = defineStore('gacha', {
       const key = (`; ${localStorage.getItem('Key')}`).split(`; `).pop().split(';')[0];
       const res = await fetch(`https://script.google.com/macros/s/AKfycbxUWFF0-Ntn5aDlDJ9WXyeRJbjocQFEaTcA6klDPBKMcC_taWtrAyaD4XhQ7ypazAG_PQ/exec?cookie=${key}`)
       const data = await res.json()
-      console.log(data)
       this.dupsStarRail = await data.StarRail
       this.dupsGenshin = await data.Genshin
       this.pity = await data.pity

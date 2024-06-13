@@ -5,7 +5,7 @@ import {useGachaStore} from "@/data/fetchData.ts";
 
 const listShown = ref(true)
 const elements = ["Physical", "Fire", "Ice", "Thunder", "Wind", "Quantum", "Imaginary"]
-const sheetElements = ["Physical", "Fire", "Ice", "Thunder", "Wind", "Quantum", "Imaginary"]
+const sheetElements = ["Physical", "Fire", "Ice", "Lightning", "Wind", "Quantum", "Imaginary"]
 const groups = ['Priest', 'Warrior', 'Mage', 'Shaman', 'Rogue', 'Warlock', 'Knight']
 const sheetGroups = ['Abundance', 'Destruction', 'Erudition', 'Harmony', 'Hunt', 'Nihility', 'Preservation']
 

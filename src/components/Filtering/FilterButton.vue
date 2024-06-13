@@ -3,6 +3,7 @@ import {ref} from "vue";
 
 defineProps({
   item: String,
+  sheetName: String,
   addToFilter: Function,
   replaceChar: Function,
   filterListItem: Array,
@@ -16,7 +17,7 @@ const checked = ref(false)
   <label>
     <input type="checkbox" :key="item" @click="addToFilter(item, filterListItem)" v-model="checked">
     <img :alt="item" :class="`element ${checked === true ? 'opaque' : ''}`" :src="`${replaceChar(itemSrc, [item])}`">
-    <span>{{item}}</span>
+    <span>{{ sheetName }}</span>
   </label>
 </template>
 

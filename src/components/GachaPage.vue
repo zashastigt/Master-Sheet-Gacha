@@ -50,7 +50,9 @@ const list = computed(() => {
   <Filter
     :listShown="listShown"
     :elements="elements"
+    :sheet-elements="sheetElements"
     :groups="groups"
+    :sheet-groups="sheetGroups"
     :element-src="itemElement"
     :group-src="itemGroup"
     :filter-list-element="filterListElement"

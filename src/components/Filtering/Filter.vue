@@ -5,7 +5,9 @@ import FilterButton from "@/components/Filtering/FilterButton.vue";
 defineProps({
   listShown: Boolean,
   elements: Array,
+  sheetElements: Array,
   groups: Array,
+  sheetGroups: Array,
   elementSrc: String,
   groupSrc: String,
   filterListElement: Array,
@@ -31,6 +33,7 @@ function addToFilter(item, list) {
     <FilterButton
       v-for="element in elements"
       :item="element"
+      :sheet-name="sheetElements[elements.indexOf(element)]"
       :add-to-filter="addToFilter"
       :replace-char="replaceChar"
       :filter-list-item="filterListElement"
@@ -41,6 +44,7 @@ function addToFilter(item, list) {
     <FilterButton
       v-for="group in groups"
       :item="group"
+      :sheet-name="sheetGroups[groups.indexOf(group)]"
       :add-to-filter="addToFilter"
       :replace-char="replaceChar"
       :filter-list-item="filterListGroup"
