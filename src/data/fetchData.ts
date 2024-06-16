@@ -43,6 +43,7 @@ export const useGachaStore = defineStore('gacha', {
   state: () => ({
     dupsStarRail: null,
     dupsGenshin: null,
+    dupsWuWa: null,
     pity: null,
     characters: {},
     weapons: {},
@@ -54,6 +55,7 @@ export const useGachaStore = defineStore('gacha', {
       const data = await res.json()
       this.dupsStarRail = await data.StarRail
       this.dupsGenshin = await data.Genshin
+      this.dupsWuWa = await data.WutheringWaves
       this.pity = await data.pity
     },
     async getCharacterInfo(url: string, game: string, remove: string[]) {

@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import GachaPage from "@/components/GachaPage.vue";
 import {useGachaStore} from "@/data/fetchData.ts";
 
@@ -14,7 +14,7 @@ store.getCharacterInfo(`https://api.ambr.top/v2/en/avatar`, 'Genshin', ['1000000
 store.getWeaponInfo(`https://api.ambr.top/v2/en/weapon`, 'Genshin', ['11101', '11201', '12101', '12201', '13101', '13201', '14101', '14201', '15101', '15201'])
 store.getSheetData()
 
-function travelerFix() {
+const travelerFix = computed(() => {
   return Object.values(store.characters).map(item => {
     if (item.name === 'Traveler') {
       const elementalNames = {
@@ -33,14 +33,14 @@ function travelerFix() {
     }
     return item;
   });
-}
+})
 </script>
 
 <template>
   <GachaPage
     v-if="store.characters"
     :game="'Genshin'"
-    :items="listShown ? travelerFix(store.characters) : Object.values(store.weapons)"
+    :items="listShown ? travelerFix : Object.values(store.weapons)"
     :dups="store.dupsGenshin"
     :pity="store.pity?.Genshin"
     :dup-letter="['R', 'C']"

@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {computed, onUpdated, ref} from "vue";
 import GachaPage from "@/components/GachaPage.vue";
 import {useGachaStore} from "@/data/fetchData.ts";
 
@@ -14,21 +14,27 @@ store.getCharacterInfo(`https://api.yatta.top/hsr/v2/en/avatar`, 'StarRail', ['8
 store.getWeaponInfo(`https://api.yatta.top/hsr/v2/en/equipment`, 'StarRail', [])
 store.getSheetData()
 
-function trailblazerFix() {
+const trailblazerFix = computed(() => {
   return Object.values(store.characters).map(item => {
     if (item.name === 'Trailblazer') {
       item.name = item.name + ' ' + item.element
     }
     return item
   })
-}
+})
+
+
+onUpdated(() => {
+  console.log(trailblazerFix.value)
+  console.log(store.pity)
+})
 </script>
 
 <template>
   <GachaPage
-    v-if="trailblazerFix(store.characters)"
+    v-if="trailblazerFix"
     :game="'StarRail'"
-    :items="listShown ? trailblazerFix(store.characters) : Object.values(store.weapons)"
+    :items="listShown ? trailblazerFix : Object.values(store.weapons)"
     :dups="store.dupsStarRail"
     :dup-letter="['S', 'E']"
     :pity="store.pity?.StarRail"
