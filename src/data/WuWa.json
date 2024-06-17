@@ -86,14 +86,14 @@
   "Rover Havoc": {
     "element": "Havoc",
     "group": "Sword",
-    "icon": "Rover Havoc",
+    "icon": "Rover",
     "name": "Rover Havoc",
     "rarit": 5
   },
   "Rover Spectro": {
     "element": "Spectro",
     "group": "Sword",
-    "icon": "Rover Spectro",
+    "icon": "Rover",
     "name": "Rover Spectro",
     "rarit": 5
   },

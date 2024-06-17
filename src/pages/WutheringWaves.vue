@@ -2,15 +2,16 @@
 import GachaPage from "@/components/GachaPage.vue";
 import {useGachaStore} from "@/data/fetchData.ts";
 import WuWa from "@/data/WuWa.json"
-import {computed, ref} from "vue";
+import {computed, onUpdated, ref} from "vue";
 
 const listShown = ref(true)
-const elements = ["Physical", "Fire", "Ice", "Thunder", "Wind", "Quantum"]
-const sheetElements = ["Physical", "Fire", "Ice", "Lightning", "Wind", "Quantum"]
-const groups = ['Priest', 'Warrior', 'Mage', 'Shaman', 'Rogue']
-const sheetGroups = ['Abundance', 'Destruction', 'Erudition', 'Harmony', 'Hunt']
+const elements = ["Aero", "Electro", "Fusion", "Glacio", "Havoc", "Spectro"]
+const sheetElements = ["Aero", "Electro", "Fusion", "Glacio", "Havoc", "Spectro"]
+const groups = ["Sword", "Broadblade", "Guantlets", "Rectifier", "Pistols"]
+const sheetGroups = ["Sword", "Broadblade", "Guantlets", "Rectifier", "Pistols"]
 
 const store = useGachaStore()
+store.getSheetData()
 
 const toArray = computed(() => {
   return Object.values(WuWa).map(item => {
@@ -22,7 +23,7 @@ const toArray = computed(() => {
 
 <template>
   <GachaPage
-    v-if="{}"
+    v-if="{toArray}"
     :game="'WutheringWaves'"
     :items="toArray"
     :dups="store.dupsWuWa"
