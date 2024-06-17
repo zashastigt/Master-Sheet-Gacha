@@ -7,8 +7,8 @@ import {computed, onUpdated, ref} from "vue";
 const listShown = ref(true)
 const elements = ["Aero", "Electro", "Fusion", "Glacio", "Havoc", "Spectro"]
 const sheetElements = ["Aero", "Electro", "Fusion", "Glacio", "Havoc", "Spectro"]
-const groups = ["Sword", "Broadblade", "Guantlets", "Rectifier", "Pistols"]
-const sheetGroups = ["Sword", "Broadblade", "Guantlets", "Rectifier", "Pistols"]
+const groups = ["Sword", "Broadblade", "Gauntlets", "Rectifier", "Pistols"]
+const sheetGroups = ["Sword", "Broadblade", "Gauntlets", "Rectifier", "Pistols"]
 
 const store = useGachaStore()
 store.getSheetData()
@@ -39,7 +39,7 @@ const toArray = computed(() => {
     :item-img="listShown ? `./WuWa/Portraits/{var1}.png` : `https://api.yatta.top/hsr/assets/UI/equipment/medium/{var1}.png`"
     :item-link="listShown ? `https://www.prydwen.gg/wuthering-waves/characters/{var1}` : `https://hsr.yatta.top/en/archive/equipment/{var1}/{var2}`"
     :item-element="`./WuWa/ElementIcons/{var1}.png`"
-    :item-group="`https://api.yatta.top/hsr/assets/UI/profession/IconProfession{var1}Small.png`"
+    :item-group="`./WuWa/WeaponIcons/{var1}.webp`"
     @switch-list="listShown = !listShown"
   />
 </template>

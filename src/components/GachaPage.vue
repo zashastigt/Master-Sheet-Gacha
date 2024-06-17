@@ -65,11 +65,11 @@ const list = computed(() => {
     />
     <div class="switch">
       <div>
-        <img alt="character" :src="switchCharImg">
+        <img class="switchIcon" alt="character" :src="switchCharImg">
         <button @click="$emit('switchList')">
           <div :class="`slider ${sliderPosition}`"></div>
         </button>
-        <img alt="weapon" :src="switchWeaponImg">
+        <img class="switchIcon" alt="weapon" :src="switchWeaponImg">
       </div>
         <SearchBar v-model:search-value="filterSearch" />
     </div>
@@ -152,6 +152,10 @@ const list = computed(() => {
 
 .switch button:hover {
   background-color: #484848;
+}
+
+.switchIcon {
+  height: 35px;
 }
 
 .sliderLeft {

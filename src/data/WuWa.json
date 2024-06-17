@@ -4,139 +4,139 @@
     "group": "Pistols",
     "icon": "Aalto",
     "name": "Aalto",
-    "rarit": 4
+    "rarity": 4
   },
   "Baizhi": {
     "element": "Glacio",
     "group": "Rectifier",
     "icon": "Baizhi",
     "name": "Baizhi",
-    "rarit": 4
+    "rarity": 4
   },
   "Calcharo": {
     "element": "Electro",
     "group": "Broadblade",
     "icon": "Calcharo",
     "name": "Calcharo",
-    "rarit": 5
+    "rarity": 5
   },
   "Changli": {
     "element": "Fusion",
     "group": "Sword",
     "icon": "Changli",
     "name": "Changli",
-    "rarit":5
+    "rarity":5
   },
   "Chixia": {
     "element": "Fusion",
     "group": "Pistols",
     "icon": "Chixia",
     "name": "Chixia",
-    "rarit": 4
+    "rarity": 4
   },
   "Danjin": {
     "element": "Havoc",
     "group": "Sword",
     "icon": "Danjin",
     "name": "Danjin",
-    "rarit": 4
+    "rarity": 4
   },
   "Encore": {
     "element": "Fusion",
     "group": "Rectifier",
     "icon": "Encore",
     "name": "Encore",
-    "rarit": 5
+    "rarity": 5
   },
   "Jianxin": {
     "element": "Aero",
     "group": "Gauntlets",
     "icon": "Jianxin",
     "name": "Jianxin",
-    "rarit": 5
+    "rarity": 5
   },
   "Jinhsi": {
     "element": "Spectro",
     "group": "Broadblade",
     "icon": "Jinhsi",
     "name": "Jinhsi",
-    "rarit": 5
+    "rarity": 5
   },
   "Jiyan": {
     "element": "Aero",
     "group": "Broadblade",
     "icon": "Jiyan",
     "name": "Jiyan",
-    "rarit": 5
+    "rarity": 5
   },
   "Lingyang": {
     "element": "Glacio",
-    "group": "Guantlets",
+    "group": "Gauntlets",
     "icon": "Lingyang",
     "name": "Lingyang",
-    "rarit": 5
+    "rarity": 5
   },
   "Mortefi": {
     "element": "Fusion",
     "group": "Pistols",
     "icon": "Mortefi",
     "name": "Mortefi",
-    "rarit": 4
+    "rarity": 4
   },
   "Rover Havoc": {
     "element": "Havoc",
     "group": "Sword",
     "icon": "Rover",
     "name": "Rover Havoc",
-    "rarit": 5
+    "rarity": 5
   },
   "Rover Spectro": {
     "element": "Spectro",
     "group": "Sword",
     "icon": "Rover",
     "name": "Rover Spectro",
-    "rarit": 5
+    "rarity": 5
   },
   "Sanhua": {
     "element": "Glacio",
     "group": "Sword",
     "icon": "Sanhua",
     "name": "Sanhua",
-    "rarit": 4
+    "rarity": 4
   },
   "Taoqi": {
     "element": "Havoc",
     "group": "Broadblade",
     "icon": "Taoqi",
     "name": "Taoqi",
-    "rarit": 4
+    "rarity": 4
   },
   "Verina": {
     "element": "Spectro",
     "group": "Rectifier",
     "icon": "Verina",
     "name": "Verina",
-    "rarit": 5
+    "rarity": 5
   },
   "Yangyang": {
     "element": "Aero",
     "group": "Sword",
     "icon": "Yangyang",
     "name": "Yangyang",
-    "rarit": 4
+    "rarity": 4
   },
   "Yinlin": {
     "element": "Electro",
     "group": "Rectifier",
     "icon": "Yinlin",
     "name": "Yinlin",
-    "rarit": 5
+    "rarity": 5
   },
   "Yuanwu": {
     "element": "Electro",
-    "group": "Guantlets",
+    "group": "Gauntlets",
     "icon": "Yuanwu",
     "name": "Yuanwu",
-    "rarit": 4
+    "rarity": 4
   }
 }
