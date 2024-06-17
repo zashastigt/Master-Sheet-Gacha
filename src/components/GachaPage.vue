@@ -77,7 +77,7 @@ const list = computed(() => {
       <ItemBox
         v-for="item in list"
         :key="item.id"
-        :game="'StarRail'"
+        :game="game"
         :item="item"
         :dups="dups"
         :dub-letter="dupLetter"
