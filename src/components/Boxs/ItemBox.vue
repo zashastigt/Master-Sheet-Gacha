@@ -1,5 +1,6 @@
 <script setup>
 import {postData} from "@/data/postData.ts";
+import {onUpdated} from "vue";
 
 const props = defineProps({
   game: String,
@@ -15,6 +16,11 @@ const props = defineProps({
   itemLink: String,
   itemElement: String,
   itemGroup: String
+})
+
+onUpdated(()=>{
+  console.log(props.item)
+  console.log(props.dups)
 })
 
 function changeLevel(direction, name, CE, person) {

@@ -22,12 +22,6 @@ const trailblazerFix = computed(() => {
     return item
   })
 })
-
-
-onUpdated(() => {
-  console.log(trailblazerFix.value)
-  console.log(store.pity)
-})
 </script>
 
 <template>
