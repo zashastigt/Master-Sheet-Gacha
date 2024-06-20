@@ -1,5 +1,5 @@
 <script setup>
-import ItemBox from "@/components/Boxs/ItemBox.vue";
+import ItemBox from "@/components/Boxes/ItemBox.vue";
 import {computed, ref} from "vue";
 import Filter from "@/components/Filtering/Filter.vue";
 import {replaceChar} from "@/data/manipulation.ts";

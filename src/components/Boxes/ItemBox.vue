@@ -1,7 +1,7 @@
 <script setup>
 import {postData} from "@/data/postData.ts";
 import {onUpdated} from "vue";
-
+import {computed, ref} from "vue";
 
 const props = defineProps({
   game: String,
@@ -19,12 +19,34 @@ const props = defineProps({
   itemGroup: String
 })
 
+let alreadyUpdated = ref(false)
+
 onUpdated(()=>{
-  console.log(props.dups[props.listShown ? 'Characters' : 'Weapons'][props.item.name]?.CE)
-  console.log(Object.keys(props.dups[props.listShown ? 'Characters' : 'Weapons'][props.item.name]?.CE))
-  for (let key in Object.keys(props.dups[props.listShown ? 'Characters' : 'Weapons'][props.item.name]?.CE)) {
-    console.log(Object.keys(props.dups[props.listShown ? 'Characters' : 'Weapons'][props.item.name]?.CE[key]))
+  sendNewCharacter()
+})
+
+function sendNewCharacter() {
+  if (!alreadyUpdated.value && !props.dups[props.listShown ? 'Characters' : 'Weapons'].hasOwnProperty([props.item.name])) {
+    alreadyUpdated.value = true
+    postData({
+      level: '',
+      person: 'Wilco',
+      name: props.item.name,
+      game: props.game,
+      group: props.listShown ? 'Character' : 'Weapon',
+      element: props.sheetElements[props.elements.indexOf(props.item.element)],
+      rank: props.item.rarity,
+      path: props.sheetGroups[props.groups.indexOf(props.item.group)]
+    })
+ }
+}
+
+const persons = computed(() => { 
+  const defaultPersons = {}
+  for (const key of Object.keys(Object.values(props.dups['Characters'])[0].CE)) {
+    defaultPersons[key] = ''
   }
+  return defaultPersons
 })
 
 function changeLevel(direction, name, CE, person) {
@@ -58,12 +80,12 @@ function changeLevel(direction, name, CE, person) {
       <img class="group" alt="group" :src="itemGroup">
     </div>
     <div class="itemCE">
-      <div class="CE" v-if="dups" v-for="(CE, key) in dups[props.listShown ? 'Characters' : 'Weapons'][item.name]?.CE">
+      <div class="CE" v-if="dups" v-for="(CE, key) in dups[listShown ? 'Characters' : 'Weapons'][item.name]?.CE ?? persons">
         <div class="personName">{{key}}</div>
         <div class="CECount some" :class="{all: CE.includes('6'), none: CE === ''}">{{CE}}</div>
         <div class="buttons">
-          <button class="up" @click="changeLevel(1, dups[props.listShown ? 'Characters' : 'Weapons'][item.name]?.Name, CE, key)" v-if="listShown ? !CE.includes('6') : !CE.includes('5')">+</button>
-          <button class="down" @click="changeLevel(-1, dups[props.listShown ? 'Characters' : 'Weapons'][item.name]?.Name, CE, key)" v-if="CE !== ''">-</button>
+          <button class="up" @click="changeLevel(1, dups[listShown ? 'Characters' : 'Weapons'][item.name]?.Name, CE, key)" v-if="listShown ? !CE.includes('6') : !CE.includes('5')">+</button>
+          <button class="down" @click="changeLevel(-1, dups[listShown ? 'Characters' : 'Weapons'][item.name]?.Name, CE, key)" v-if="CE !== ''">-</button>
         </div>
       </div>
     </div>

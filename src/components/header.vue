@@ -1,5 +1,5 @@
 <script setup>
-import PityBox from "@/components/Boxs/PityBox.vue";
+import PityBox from "@/components/Boxes/PityBox.vue";
 import {ref} from "vue";
 
 defineProps({
