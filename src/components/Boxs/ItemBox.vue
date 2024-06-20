@@ -2,6 +2,7 @@
 import {postData} from "@/data/postData.ts";
 import {onUpdated} from "vue";
 
+
 const props = defineProps({
   game: String,
   item: Object,
@@ -19,8 +20,11 @@ const props = defineProps({
 })
 
 onUpdated(()=>{
-  console.log(props.item)
-  console.log(props.dups)
+  console.log(props.dups[props.listShown ? 'Characters' : 'Weapons'][props.item.name]?.CE)
+  console.log(Object.keys(props.dups[props.listShown ? 'Characters' : 'Weapons'][props.item.name]?.CE))
+  for (let key in Object.keys(props.dups[props.listShown ? 'Characters' : 'Weapons'][props.item.name]?.CE)) {
+    console.log(Object.keys(props.dups[props.listShown ? 'Characters' : 'Weapons'][props.item.name]?.CE[key]))
+  }
 })
 
 function changeLevel(direction, name, CE, person) {
