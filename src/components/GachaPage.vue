@@ -5,6 +5,10 @@ import Filter from "@/components/Filtering/Filter.vue";
 import {replaceChar} from "@/data/manipulation.ts";
 import Header from "@/components/header.vue";
 import SearchBar from "@/components/Filtering/SearchBar.vue";
+import {useGachaStore} from "../data/fetchData";
+import {onUpdated} from "vue";
+import {postData} from "@/data/postData.ts";
+
 
 const props = defineProps({
   game: String,
@@ -32,6 +36,43 @@ const sliderPosition = computed(() => props.listShown ? 'sliderLeft' : 'sliderRi
 let filterListElement = ref([])
 let filterListGroup = ref([])
 let filterSearch =ref('')
+
+let alreadyUpdated = ref(false)
+const store = useGachaStore()
+
+onUpdated(()=>{
+  newItem()
+})
+
+function newItem() {
+  if (!alreadyUpdated.value && props.dups != null) {
+    alreadyUpdated.value = true
+    const newCharacters = Object.values(store.characters)
+    .filter(obj => !Object.values(props.dups['Characters'])
+    .some((char) => obj.name === char.Name))
+    const newWeapons = Object.values(store.weapons)
+    .filter(obj => !Object.values(props.dups['Weapons'])
+    .some((weapon) => obj.name === weapon.Name))  
+
+    sendNewItem(newCharacters, 'Characters')
+    sendNewItem(newWeapons, 'Weapon')
+ }
+}
+
+function sendNewItem(newItems, group) {
+  for (let item of newItems) {
+    postData({
+      level: '',
+      person: 'Wilco',
+      name: item.name,
+      game: props.game,
+      group: group,
+      element: props.sheetElements[props.elements.indexOf(item.element)],
+      rank: item.rarity,
+      path: props.sheetGroups[props.groups.indexOf(item.group)]
+    })
+  }
+}
 
 const list = computed(() => {
   let itemList = props.items

@@ -1,7 +1,7 @@
 <script setup>
 import {postData} from "@/data/postData.ts";
 import {onUpdated} from "vue";
-import {computed, ref} from "vue";
+import {computed} from "vue";
 
 const props = defineProps({
   game: String,
@@ -18,28 +18,6 @@ const props = defineProps({
   itemElement: String,
   itemGroup: String
 })
-
-let alreadyUpdated = ref(false)
-
-onUpdated(()=>{
-  sendNewCharacter()
-})
-
-function sendNewCharacter() {
-  if (!alreadyUpdated.value && !props.dups[props.listShown ? 'Characters' : 'Weapons'].hasOwnProperty([props.item.name])) {
-    alreadyUpdated.value = true
-    postData({
-      level: '',
-      person: 'Wilco',
-      name: props.item.name,
-      game: props.game,
-      group: props.listShown ? 'Character' : 'Weapon',
-      element: props.sheetElements[props.elements.indexOf(props.item.element)],
-      rank: props.item.rarity,
-      path: props.sheetGroups[props.groups.indexOf(props.item.group)]
-    })
- }
-}
 
 const persons = computed(() => { 
   const defaultPersons = {}
