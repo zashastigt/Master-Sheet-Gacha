@@ -27,11 +27,13 @@ const persons = computed(() => {
   return defaultPersons
 })
 
+let data = {}
 function changeLevel(direction, name, CE, person) {
   const maxCE = props.listShown ? 6 : 5
   const newCE = Math.max(-1, Math.min(maxCE, parseInt(CE[1] ?? -1) + direction))
   props.dups[props.listShown ? 'Characters' : 'Weapons'][name].CE[person] = (newCE !== -1 ? (props.dubLetter[+props.listShown]) + newCE : '')
-  postData({
+
+  data = {
     level: newCE !== -1 ? (props.dubLetter[+props.listShown]) + newCE : '',
     person: person,
     name: name,
@@ -40,8 +42,20 @@ function changeLevel(direction, name, CE, person) {
     element: props.sheetElements[props.elements.indexOf(props.item.element)],
     rank: props.item.rarity,
     path: props.sheetGroups[props.groups.indexOf(props.item.group)]
-  })
+  }
+
+  debouncePostDate()
 }
+
+const debouncePostDate = debounce(() => postData(data))
+function debounce(func){
+  let timer;
+  return () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this) }, 1000);
+  }
+}
+
 </script>
 
 <template>
