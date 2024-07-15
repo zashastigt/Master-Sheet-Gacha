@@ -21,6 +21,7 @@ let showPity = ref(false)
       <RouterLink class="link" to="Genshin">Genshin</RouterLink>
       <RouterLink class="link" to="StarRail">Star Rail</RouterLink>
       <RouterLink class="link" to="WutheringWaves">Wuthering Waves</RouterLink>
+      <RouterLink class="link" to="/ZenlessZoneZero">Zenless Zone Zero</RouterLink>
     </nav>
     <div class="navSpacing">&nbsp;</div>
   </div>
