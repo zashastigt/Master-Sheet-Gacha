@@ -30,7 +30,7 @@ function sendNewCharacter() {
     alreadyUpdated.value = true
     postData({
       level: '',
-      person: 'Wilco',
+      person: 'Zasha',
       name: props.item.name,
       game: props.game,
       group: props.listShown ? 'Character' : 'Weapon',

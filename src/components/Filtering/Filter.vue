@@ -31,7 +31,7 @@ function addToFilter(item, list) {
 <div class="filters">
   <ul :class="{elements, elementsHidden: !listShown}">
     <FilterButton
-      v-for="element in elements"
+      v-for="element in elements.filter(Boolean)"
       :item="element"
       :sheet-name="sheetElements[elements.indexOf(element)]"
       :add-to-filter="addToFilter"

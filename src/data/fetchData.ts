@@ -39,24 +39,39 @@ function convertStarRail(object: Record<string, any>, remove: string[]) {
   return filterObject(convertToObject(newObj), remove)
 }
 
-function convertWuthering(object: Record<string, any>, type: string, remove: string[]) {
+function convertZenless(object: Record<string, any>, remove: string[]) {
   console.log(object)
   const newObj = Object.keys(object).map(item => {
-    let group: {}
-    if (type === 'character') {
-      group = object[item].weapon
-    } else {
-      group = object[item].type
-    }
-    let icon: {}
-    if (type === 'character') {
-      icon = object[item].icon.split("_")[2]
-    } else {
-      icon = [item][0]
-    }
     return {
       [item]: {
-        id: [item][0],
+        id: item,
+        name: object[item].EN,
+        rarity: object[item].rank+1,
+        element: object[item].element-200,
+        group: object[item].type,
+        icon: object[item].id
+      }
+    }
+  })
+  return filterObject(convertToObject(newObj), remove)
+}
+
+function convertWuthering(object: Record<string, any>, type: string, remove: string[]) {
+  const newObj = Object.keys(object).map(item => {
+    let group: string
+    let icon: string
+
+    if (type === 'character') {
+      group = object[item].weapon
+      icon = object[item].icon.split("_")[2]
+    } else {
+      group = object[item].type
+      icon = [item][0]
+    }
+
+    return {
+      [item]: {
+        id: item,
         name: object[item].en,
         rarity: object[item].rank,
         element: object[item].element,
@@ -73,6 +88,7 @@ export const useGachaStore = defineStore('gacha', {
     dupsStarRail: null,
     dupsGenshin: null,
     dupsWuWa: null,
+    dupsZZZ: null,
     pity: null,
     characters: {},
     weapons: {},
@@ -85,6 +101,7 @@ export const useGachaStore = defineStore('gacha', {
       this.dupsStarRail = await data.StarRail
       this.dupsGenshin = await data.Genshin
       this.dupsWuWa = await data.WutheringWaves
+      this.dupsZZZ = await data.Zenless
       this.pity = await data.pity
     },
     async getCharacterInfo(url: string, game: string, remove: string[]) {
@@ -95,6 +112,8 @@ export const useGachaStore = defineStore('gacha', {
           return this.characters = convertGenshin(data.data.items, 'character', remove)
         case 'StarRail':
           return this.characters = convertStarRail(data.data.items, remove)
+        case 'Zenless':
+          return this.characters = convertZenless(data, remove)
         case 'Wuthering':
           return this.characters = convertWuthering(data, 'character', remove)
       }
@@ -107,6 +126,8 @@ export const useGachaStore = defineStore('gacha', {
           return this.weapons = convertGenshin(data.data.items, 'weapon', remove)
         case 'StarRail':
           return this.weapons = convertStarRail(data.data.items, remove)
+        case 'Zenless':
+          return this.weapons = convertZenless(data, remove)
         case 'Wuthering':
           return this.weapons = convertWuthering(data, 'weapon', remove)
       }
