@@ -34,6 +34,7 @@ let filterListGroup = ref([])
 let filterSearch =ref('')
 
 const list = computed(() => {
+  console.log(props.items)
   let itemList = props.items
   let sortedList = itemList
     .sort((a, b) => props.listShown ? a.element.localeCompare(b.element) : a.group.localeCompare(b.group))

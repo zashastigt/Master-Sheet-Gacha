@@ -1,16 +1,17 @@
 <script setup>
 import GachaPage from "@/components/GachaPage.vue";
 import {useGachaStore} from "@/data/fetchData.ts";
-import WuWa from "@/data/WuWa.json"
 import {computed, onUpdated, ref} from "vue";
 
-const listShown = ref(true)
-const elements = ["Aero", "Electro", "Fusion", "Glacio", "Havoc", "Spectro"]
-const sheetElements = ["Aero", "Electro", "Fusion", "Glacio", "Havoc", "Spectro"]
-const groups = ["Sword", "Broadblade", "Gauntlets", "Rectifier", "Pistols"]
-const sheetGroups = ["Sword", "Broadblade", "Gauntlets", "Rectifier", "Pistols"]
+const listShown = ref(false)
+const elements = ["Glacio", "Fusion", "Electro", "Aero", "Spectro", "Havoc"]
+const sheetElements = ["Glacio", "Fusion", "Electro", "Aero", "Spectro", "Havoc"]
+const groups = ["Broadblade", "Sword", "Pistols", "Gauntlets", "Rectifier"]
+const sheetGroups = ["Broadblade", "Sword", "Pistols", "Gauntlets", "Rectifier"]
 
 const store = useGachaStore()
+store.getCharacterInfo(`https://api.hakush.in/ww/data/character.json`, 'Wuthering', [])
+store.getWeaponInfo(`https://api.hakush.in/ww/data/weapon.json`, 'Wuthering', [])
 store.getSheetData()
 
 const toArray = computed(() => {
@@ -19,13 +20,25 @@ const toArray = computed(() => {
   })
 })
 
+const typeFixChar = computed(() => {
+  return Object.values(store.characters).map(item => {
+      return {...item, element: elements[item.element-1], group: groups[item.group-1]}
+  })
+})
+
+const typeFixWeapon = computed(() => {
+
+  return Object.values(store.weapons).filter((item) => item.rarity !== 1 && item.rarity !== 2).map(item => {
+      return {...item, group: groups[item.group-1]}
+  })
+})
 </script>
 
 <template>
   <GachaPage
-    v-if="{toArray}"
+    v-if="typeFixChar"
     :game="'WutheringWaves'"
-    :items="toArray"
+    :items="listShown ? typeFixChar : typeFixWeapon"
     :dups="store.dupsWuWa"
     :dup-letter="['R', 'R']"
     :pity="store.pity?.WutheringWaves"
@@ -36,9 +49,9 @@ const toArray = computed(() => {
     :list-shown="listShown"
     :switch-char-img="`./WuWa/Character.png`"
     :switch-weapon-img="`./WuWa/Weapon.png`"
-    :item-img="listShown ? `./WuWa/Portraits/{var1}.png` : `https://api.yatta.top/hsr/assets/UI/equipment/medium/{var1}.png`"
+    :item-img="listShown ? `https://api.hakush.in/ww/UI/UIResources/Common/Image/IconRoleHead256/T_IconRoleHead256_{var1}_UI.webp` : `https://api.hakush.in/ww/UI/UIResources/Common/Image/IconWeapon/T_IconWeapon{var1}_UI.webp`"
     :item-link="listShown ? `https://www.prydwen.gg/wuthering-waves/characters/{var1}` : `https://hsr.yatta.top/en/archive/equipment/{var1}/{var2}`"
-    :item-element="`./WuWa/ElementIcons/{var1}.png`"
+    :item-element="`./WuWa/ElementIcons/{var1}.webp`"
     :item-group="`./WuWa/WeaponIcons/{var1}.webp`"
     @switch-list="listShown = !listShown"
   />
