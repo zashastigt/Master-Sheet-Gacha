@@ -3,7 +3,7 @@ import GachaPage from "@/components/GachaPage.vue";
 import {useGachaStore} from "@/data/fetchData.ts";
 import {computed, onUpdated, ref} from "vue";
 
-const listShown = ref(false)
+const listShown = ref(true)
 const elements = ["Physical", "Fire", "Ice", "Electric", '', "Ether"]
 const sheetElements = ["Physical", "Fire", "Ice", "Electric", '', "Ether"]
 const groups = ["Attack", "Stun", "Anomaly", "Support", "Defense"]
