@@ -39,9 +39,17 @@ function convertStarRail(object: Record<string, any>, remove: string[]) {
   return filterObject(convertToObject(newObj), remove)
 }
 
-function convertZenless(object: Record<string, any>, remove: string[]) {
+function convertZenless(object: Record<string, any>, type: string, remove: string[]) {
   console.log(object)
   const newObj = Object.keys(object).map(item => {
+    let icon: string
+
+    if (type === 'character') {
+      icon = object[item].icon.match(/\d+/) ? object[item].icon.match(/\d+/)[0] : null
+    } else {
+      icon = object[item].icon
+    }
+
     return {
       [item]: {
         id: item,
@@ -49,7 +57,7 @@ function convertZenless(object: Record<string, any>, remove: string[]) {
         rarity: object[item].rank+1,
         element: object[item].element-200,
         group: object[item].type,
-        icon: object[item].id
+        icon: icon
       }
     }
   })
@@ -98,6 +106,7 @@ export const useGachaStore = defineStore('gacha', {
       const key = (`; ${localStorage.getItem('Key')}`).split(`; `).pop().split(';')[0];
       const res = await fetch(`https://script.google.com/macros/s/AKfycbxUWFF0-Ntn5aDlDJ9WXyeRJbjocQFEaTcA6klDPBKMcC_taWtrAyaD4XhQ7ypazAG_PQ/exec?cookie=${key}`)
       const data = await res.json()
+      console.log(data)
       this.dupsStarRail = await data.StarRail
       this.dupsGenshin = await data.Genshin
       this.dupsWuWa = await data.WutheringWaves
@@ -113,7 +122,7 @@ export const useGachaStore = defineStore('gacha', {
         case 'StarRail':
           return this.characters = convertStarRail(data.data.items, remove)
         case 'Zenless':
-          return this.characters = convertZenless(data, remove)
+          return this.characters = convertZenless(data, 'character', remove)
         case 'Wuthering':
           return this.characters = convertWuthering(data, 'character', remove)
       }
@@ -127,7 +136,7 @@ export const useGachaStore = defineStore('gacha', {
         case 'StarRail':
           return this.weapons = convertStarRail(data.data.items, remove)
         case 'Zenless':
-          return this.weapons = convertZenless(data, remove)
+          return this.weapons = convertZenless(data, 'weapon', remove)
         case 'Wuthering':
           return this.weapons = convertWuthering(data, 'weapon', remove)
       }

@@ -229,6 +229,11 @@ function changeLevel(direction, name, CE, person) {
   border-radius: 0 10px 10px 0;
 }
 
+.CE:only-child .CECount {
+  margin-right: 5px;
+  border-radius: 10px;
+}
+
 .CE .some {
   background-color: green;
 }
