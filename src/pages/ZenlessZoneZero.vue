@@ -34,7 +34,7 @@ const typeFixWeapon = computed(() => {
     :game="'Zenless'"
     :items="listShown ? typeFixChar : typeFixWeapon"
     :dups="store.dupsZZZ"
-    :dup-letter="['C', 'C']"
+    :dup-letter="['R', 'C']"
     :pity="store.pity?.Zenless"
     :elements="elements"
     :sheet-elements="sheetElements"
