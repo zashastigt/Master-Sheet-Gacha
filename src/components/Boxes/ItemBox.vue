@@ -65,7 +65,7 @@ function changeLevel(direction, name, CE, person) {
     element: props.sheetElements[props.elements.indexOf(props.item.element)],
     rank: props.item.rarity,
     path: props.sheetGroups[props.groups.indexOf(props.item.group)]
-  }
+  })
 
   debouncePostDate()
 }
