@@ -51,8 +51,10 @@ const persons = computed(() => {
 
 function changeLevel(direction, name, CE, person) {
   const maxCE = props.listShown ? 6 : 5
-  const newCE = Math.max(-1, Math.min(maxCE, parseInt(CE[1] ?? -1) + direction))
-  props.dups[props.listShown ? 'Characters' : 'Weapons'][name].CE[person] = (newCE !== -1 ? (props.dubLetter[+props.listShown]) + newCE : '')
+  const minCE = props.listShown ? 0 : 1
+  const currentCE = parseInt(CE[1] ?? minCE-1)
+  const newCE = Math.max(minCE-1, Math.min(maxCE, currentCE + direction))
+  props.dups[props.listShown ? 'Characters' : 'Weapons'][name].CE[person] = (newCE >= minCE ? (props.dubLetter[+props.listShown]) + newCE : '')
   postData({
     level: newCE !== -1 ? (props.dubLetter[+props.listShown]) + newCE : '',
     person: person,
@@ -82,7 +84,7 @@ function changeLevel(direction, name, CE, person) {
     <div class="itemCE">
       <div class="CE" v-if="dups" v-for="(CE, key) in dups[listShown ? 'Characters' : 'Weapons'][item.name]?.CE ?? persons">
         <div class="personName">{{key}}</div>
-        <div class="CECount some" :class="{all: CE.includes('6'), none: CE === ''}">{{CE}}</div>
+        <div class="CECount some" :class="{all: CE.includes(props.listShown ? '6' : '5'), none: CE === ''}">{{CE}}</div>
         <div class="buttons">
           <button class="up" @click="changeLevel(1, dups[listShown ? 'Characters' : 'Weapons'][item.name]?.Name, CE, key)" v-if="listShown ? !CE.includes('6') : !CE.includes('5')">+</button>
           <button class="down" @click="changeLevel(-1, dups[listShown ? 'Characters' : 'Weapons'][item.name]?.Name, CE, key)" v-if="CE !== ''">-</button>
