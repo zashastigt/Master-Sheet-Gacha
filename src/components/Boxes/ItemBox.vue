@@ -49,6 +49,7 @@ const persons = computed(() => {
   return defaultPersons
 })
 
+let data = {}
 function changeLevel(direction, name, CE, person) {
   const maxCE = props.listShown ? 6 : 5
   const minCE = props.listShown ? 0 : 1
@@ -64,8 +65,20 @@ function changeLevel(direction, name, CE, person) {
     element: props.sheetElements[props.elements.indexOf(props.item.element)],
     rank: props.item.rarity,
     path: props.sheetGroups[props.groups.indexOf(props.item.group)]
-  })
+  }
+
+  debouncePostDate()
 }
+
+const debouncePostDate = debounce(() => postData(data))
+function debounce(func){
+  let timer;
+  return () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this) }, 1000);
+  }
+}
+
 </script>
 
 <template>
