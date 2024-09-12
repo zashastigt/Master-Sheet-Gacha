@@ -7,16 +7,8 @@ const props = defineProps({
   game: String
 })
 
-console.log(props.pity)
-onUpdated(()=>{
-  console.log(props.pity)
-})
+
 function changePity(person, game, pity) {
-  console.log({
-    name: person,
-    gameName: game,
-    pity: pity
-  })
   postData({
     name: person,
     gameName: game,

@@ -37,45 +37,9 @@ let filterListElement = ref([])
 let filterListGroup = ref([])
 let filterSearch =ref('')
 
-let alreadyUpdated = ref(false)
 const store = useGachaStore()
 
-onUpdated(()=>{
-  newItem()
-})
-
-function newItem() {
-  if (!alreadyUpdated.value && props.dups != null) {
-    alreadyUpdated.value = true
-    const newCharacters = Object.values(store.characters)
-    .filter(obj => !Object.values(props.dups['Characters'])
-    .some((char) => obj.name === char.Name))
-    const newWeapons = Object.values(store.weapons)
-    .filter(obj => !Object.values(props.dups['Weapons'])
-    .some((weapon) => obj.name === weapon.Name))  
-
-    sendNewItem(newCharacters, 'Characters')
-    sendNewItem(newWeapons, 'Weapon')
- }
-}
-
-function sendNewItem(newItems, group) {
-  for (let item of newItems) {
-    postData({
-      level: '',
-      person: 'Wilco',
-      name: item.name,
-      game: props.game,
-      group: group,
-      element: props.sheetElements[props.elements.indexOf(item.element)],
-      rank: item.rarity,
-      path: props.sheetGroups[props.groups.indexOf(item.group)]
-    })
-  }
-}
-
 const list = computed(() => {
-  console.log(props.items)
   let itemList = props.items
   let sortedList = itemList
     .sort((a, b) => props.listShown ? a.element.localeCompare(b.element) : a.group.localeCompare(b.group))
@@ -85,6 +49,7 @@ const list = computed(() => {
     (filterListGroup.value.length === 0 || filterListGroup.value.includes(item.group)) &&
     (filterSearch.value.length === 0 || item.name.toLowerCase().includes(filterSearch.value.toLowerCase())))
 })
+
 </script>
 
 <template>

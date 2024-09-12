@@ -26,7 +26,10 @@ onUpdated(()=>{
 })
 
 function sendNewCharacter() {
-  if (!alreadyUpdated.value && !props.dups[props.listShown ? 'Characters' : 'Weapons'].hasOwnProperty([props.item.name])) {
+  if (!alreadyUpdated.value && Object.values(props.dups[props.listShown ? 'Characters' : 'Weapons']).some(e => 
+    e.name == [props.item.name] && 
+    e.element == props.sheetElements[props.elements.indexOf(props.item.element)])) {
+    
     alreadyUpdated.value = true
     postData({
       level: '',
@@ -76,6 +79,10 @@ function debounce(func){
   }
 }
 
+function getItem() {
+  if (props.dups == null) return;
+  return Object.values(props.dups[props.listShown ? 'Characters' : 'Weapons']).find(item => item.Name == props.item.name)
+}
 </script>
 
 <template>
@@ -92,12 +99,12 @@ function debounce(func){
       <img class="group" alt="group" :src="itemGroup">
     </div>
     <div class="itemCE">
-      <div class="CE" v-if="dups" v-for="(CE, key) in dups[listShown ? 'Characters' : 'Weapons'][item.name]?.CE ?? persons">
+      <div class="CE" v-if="dups" v-for="(CE, key) in getItem()?.CE ?? persons">
         <div class="personName">{{key}}</div>
         <div class="CECount some" :class="{all: CE.includes(props.listShown ? '6' : '5'), none: CE === ''}">{{CE}}</div>
         <div class="buttons">
-          <button class="up" @click="changeLevel(1, dups[listShown ? 'Characters' : 'Weapons'][item.name]?.Name, CE, key)" v-if="listShown ? !CE.includes('6') : !CE.includes('5')">+</button>
-          <button class="down" @click="changeLevel(-1, dups[listShown ? 'Characters' : 'Weapons'][item.name]?.Name, CE, key)" v-if="CE !== ''">-</button>
+          <button class="up" @click="changeLevel(1, getItem()?.Name, CE, key)" v-if="listShown ? !CE.includes('6') : !CE.includes('5')">+</button>
+          <button class="down" @click="changeLevel(-1, getItem()?.Name, CE, key)" v-if="CE !== ''">-</button>
         </div>
       </div>
     </div>
