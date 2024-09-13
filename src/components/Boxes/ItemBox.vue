@@ -22,14 +22,12 @@ const props = defineProps({
 let alreadyUpdated = ref(false)
 
 onUpdated(()=>{
-  sendNewCharacter()
+  sendNewItem()
 })
 
-function sendNewCharacter() {
-  if (!alreadyUpdated.value && Object.values(props.dups[props.listShown ? 'Characters' : 'Weapons']).some(e => 
-    e.name == [props.item.name] && 
-    e.element == props.sheetElements[props.elements.indexOf(props.item.element)])) {
-    
+function sendNewItem() {
+  if (!alreadyUpdated.value && !Object.values(props.dups[props.listShown ? 'Characters' : 'Weapons']).some(item => 
+    item.name == props.item.name && item.type == props.sheetGroups[props.groups.indexOf(props.item.group)])) {
     alreadyUpdated.value = true
     postData({
       level: '',
@@ -52,16 +50,17 @@ const persons = computed(() => {
   return defaultPersons
 })
 
-function changeLevel(direction, name, CE, person) {
+function changeLevel(direction, item, CE, person) {
   const maxCE = props.listShown ? 6 : 5
   const minCE = props.listShown ? 0 : 1
   const currentCE = parseInt(CE[1] ?? minCE-1)
   const newCE = Math.max(minCE-1, Math.min(maxCE, currentCE + direction))
-  props.dups[props.listShown ? 'Characters' : 'Weapons'][name].CE[person] = (newCE >= minCE ? (props.dubLetter[+props.listShown]) + newCE : '')
+  item.CE[person] = (newCE >= minCE ? (props.dubLetter[+props.listShown]) + newCE : '')
+
   debouncePostDate({
     level: newCE !== -1 ? (props.dubLetter[+props.listShown]) + newCE : '',
     person: person,
-    name: name,
+    name: item.name,
     game: props.game,
     group: props.listShown ? 'Character' : 'Weapon',
     element: props.sheetElements[props.elements.indexOf(props.item.element)],
@@ -81,7 +80,7 @@ function debounce(func){
 
 function getItem() {
   if (props.dups == null) return;
-  return Object.values(props.dups[props.listShown ? 'Characters' : 'Weapons']).find(item => item.Name == props.item.name)
+  return Object.values(props.dups[props.listShown ? 'Characters' : 'Weapons']).find(item => item.name == props.item.name && item.type == props.sheetGroups[props.groups.indexOf(props.item.group)])
 }
 </script>
 
@@ -103,8 +102,8 @@ function getItem() {
         <div class="personName">{{key}}</div>
         <div class="CECount some" :class="{all: CE.includes(props.listShown ? '6' : '5'), none: CE === ''}">{{CE}}</div>
         <div class="buttons">
-          <button class="up" @click="changeLevel(1, getItem()?.Name, CE, key)" v-if="listShown ? !CE.includes('6') : !CE.includes('5')">+</button>
-          <button class="down" @click="changeLevel(-1, getItem()?.Name, CE, key)" v-if="CE !== ''">-</button>
+          <button class="up" @click="changeLevel(1, getItem(), CE, key)" v-if="listShown ? !CE.includes('6') : !CE.includes('5')">+</button>
+          <button class="down" @click="changeLevel(-1, getItem(), CE, key)" v-if="CE !== ''">-</button>
         </div>
       </div>
     </div>
