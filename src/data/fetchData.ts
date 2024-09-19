@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {convertToObject, filterObject, toPascalCase} from "./manipulation";
+import {convertToObject, filterObject} from "./manipulation";
 
 function convertGenshin(object: Record<string, any>, isChar: boolean, remove: string[]) {
   const newObj = Object.keys(object).map(item => {
