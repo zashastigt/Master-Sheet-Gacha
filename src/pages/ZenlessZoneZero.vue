@@ -10,6 +10,7 @@ const groups = ["Attack", "Stun", "Anomaly", "Support", "Defense"]
 const sheetGroups = ["Attack", "Stun", "Anomaly", "Support", "Defense"]
 
 const store = useGachaStore()
+store.reset()
 store.getCharacterInfo(`https://api.hakush.in/zzz/data/character.json`, 'Zenless', [])
 store.getWeaponInfo(`https://api.hakush.in/zzz/data/weapon.json`, 'Zenless', [])
 store.getSheetData()

@@ -98,16 +98,18 @@ function convertWuthering(object: Record<string, any>, isChar: boolean, remove: 
   return filterObject(convertToObject(newObj), remove)
 }
 
+const defaultState = {
+  dupsStarRail: null as Object,
+  dupsGenshin: null as Object,
+  dupsWuWa: null as Object,
+  dupsZZZ: null as Object,
+  pity: null as Object,
+  characters: {},
+  weapons: {},
+}
+
 export const useGachaStore = defineStore('gacha', {
-  state: () => ({
-    dupsStarRail: null,
-    dupsGenshin: null,
-    dupsWuWa: null,
-    dupsZZZ: null,
-    pity: null,
-    characters: {},
-    weapons: {},
-  }),
+  state: () => ({...defaultState}),
   actions: {
     async getSheetData() {
       const key = (`; ${localStorage.getItem('Key')}`).split(`; `).pop().split(';')[0];
@@ -146,6 +148,9 @@ export const useGachaStore = defineStore('gacha', {
         case 'Wuthering':
           return this.weapons = convertWuthering(data, false, remove)
       }
+    },
+    reset() {
+      Object.assign(this, defaultState)
     }
   }
 })

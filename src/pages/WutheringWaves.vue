@@ -10,6 +10,7 @@ const groups = ["Broadblade", "Sword", "Pistols", "Gauntlets", "Rectifier"]
 const sheetGroups = ["Broadblade", "Sword", "Pistols", "Gauntlets", "Rectifier"]
 
 const store = useGachaStore()
+store.reset()
 store.getCharacterInfo(`https://api.hakush.in/ww/data/character.json`, 'Wuthering', ['1605', '1501'])
 store.getWeaponInfo(`https://api.hakush.in/ww/data/weapon.json`, 'Wuthering', [])
 store.getSheetData()

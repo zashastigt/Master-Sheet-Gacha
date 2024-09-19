@@ -10,6 +10,7 @@ const groups = ["WEAPON_SWORD_ONE_HAND", "WEAPON_POLE", "WEAPON_CLAYMORE", "WEAP
 const sheetGroups = ["Sword", "Polearm", "Claymore", "Catalyst", "Bow"]
 
 const store = useGachaStore()
+store.reset()
 store.getCharacterInfo(`https://api.hakush.in/gi/data/character.json`, 'Genshin', ['10000005-3', '10000005-4', '10000005-6', '10000005-7', '10000005-8', '10000005-9', '10000005-10',])
 store.getWeaponInfo(`https://api.hakush.in/gi/data/weapon.json`, 'Genshin', ['11101', '11201', '12101', '12201', '13101', '13201', '14101', '14201', '15101', '15201'])
 store.getSheetData()

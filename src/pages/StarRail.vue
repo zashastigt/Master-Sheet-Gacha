@@ -11,6 +11,7 @@ const groups = ['priest', 'warrior', 'mage', 'shaman', 'rogue', 'warlock', 'knig
 const sheetGroups = ['Abundance', 'Destruction', 'Erudition', 'Harmony', 'Hunt', 'Nihility', 'Preservation']
 
 const store = useGachaStore()
+store.reset()
 store.getCharacterInfo(`https://api.hakush.in/hsr/data/character.json`, 'StarRail', ['8001', '8003', '8005', '8007', '8009', '8011', '8013'])
 store.getWeaponInfo(`https://api.hakush.in/hsr/data/lightcone.json`, 'StarRail', [])
 store.getSheetData()
