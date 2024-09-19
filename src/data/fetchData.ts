@@ -1,19 +1,23 @@
 import {defineStore} from "pinia";
 import {convertToObject, filterObject, toPascalCase} from "./manipulation";
 
-function convertGenshin(object: Record<string, any>, type: string, remove: string[]) {
+function convertGenshin(object: Record<string, any>, isChar: boolean, remove: string[]) {
   const newObj = Object.keys(object).map(item => {
     let group: {}
-    if (type === 'character') {
-      group = toPascalCase(object[item].weaponType.split('_')[1])
+    let rank: {}
+
+    if (isChar) {
+      group = object[item].weapon
+      rank = object[item].rank == 'QUALITY_ORANGE' ? 5 : 4
     } else {
-      group = toPascalCase(object[item].type.split('_')[1])
+      group = object[item].type
+      rank = object[item].rank
     }
     return {
       [item]: {
-        id: object[item].id,
-        name: object[item].name,
-        rarity: object[item].rank,
+        id: item,
+        name: object[item].EN,
+        rarity: rank,
         element: object[item].element,
         group: group,
         icon: object[item].icon
@@ -23,27 +27,31 @@ function convertGenshin(object: Record<string, any>, type: string, remove: strin
   return filterObject(convertToObject(newObj), remove)
 }
 
-function convertStarRail(object: Record<string, any>, remove: string[]) {
+function convertStarRail(object: Record<string, any>, isChar: boolean, remove: string[]) {
   const newObj = Object.keys(object).map(item => {
+    let element: {}
+    if (isChar) {
+      element = object[item].damageType.toLowerCase()
+    }
     return {
       [item]: {
-        id: object[item].id,
-        name: object[item].name,
-        rarity: object[item].rank,
-        element: object[item].types.combatType,
-        group: toPascalCase(object[item].types.pathType),
-        icon: object[item].id
+        id: item,
+        name: object[item].en,
+        rarity: object[item].rank.match(/\d+/)[0],
+        element: element,
+        group: object[item].baseType.toLowerCase(),
+        icon: item
       }
     }
   })
   return filterObject(convertToObject(newObj), remove)
 }
 
-function convertZenless(object: Record<string, any>, type: string, remove: string[]) {
+function convertZenless(object: Record<string, any>, isChar: boolean, remove: string[]) {
   const newObj = Object.keys(object).map(item => {
     let icon: string
 
-    if (type === 'character') {
+    if (isChar) {
       icon = object[item].icon.match(/\d+/) ? object[item].icon.match(/\d+/)[0] : null
     } else {
       icon = object[item].icon
@@ -63,12 +71,12 @@ function convertZenless(object: Record<string, any>, type: string, remove: strin
   return filterObject(convertToObject(newObj), remove)
 }
 
-function convertWuthering(object: Record<string, any>, type: string, remove: string[]) {
+function convertWuthering(object: Record<string, any>, isChar: boolean, remove: string[]) {
   const newObj = Object.keys(object).map(item => {
     let group: string
     let icon: string
 
-    if (type === 'character') {
+    if (isChar) {
       group = object[item].weapon
       icon = object[item].icon.split("_")[2]
     } else {
@@ -116,13 +124,13 @@ export const useGachaStore = defineStore('gacha', {
       const data = await res.json()
       switch (game) {
         case 'Genshin':
-          return this.characters = convertGenshin(data.data.items, 'character', remove)
+          return this.characters = convertGenshin(data, true, remove)
         case 'StarRail':
-          return this.characters = convertStarRail(data.data.items, remove)
+          return this.characters = convertStarRail(data, true, remove)
         case 'Zenless':
-          return this.characters = convertZenless(data, 'character', remove)
+          return this.characters = convertZenless(data, true, remove)
         case 'Wuthering':
-          return this.characters = convertWuthering(data, 'character', remove)
+          return this.characters = convertWuthering(data, true, remove)
       }
     },
     async getWeaponInfo(url: string, game: string, remove :string[]) {
@@ -130,13 +138,13 @@ export const useGachaStore = defineStore('gacha', {
       const data = await res.json()
       switch (game) {
         case 'Genshin':
-          return this.weapons = convertGenshin(data.data.items, 'weapon', remove)
+          return this.weapons = convertGenshin(data, false, remove)
         case 'StarRail':
-          return this.weapons = convertStarRail(data.data.items, remove)
+          return this.weapons = convertStarRail(data, false, remove)
         case 'Zenless':
-          return this.weapons = convertZenless(data, 'weapon', remove)
+          return this.weapons = convertZenless(data, false, remove)
         case 'Wuthering':
-          return this.weapons = convertWuthering(data, 'weapon', remove)
+          return this.weapons = convertWuthering(data, false, remove)
       }
     }
   }

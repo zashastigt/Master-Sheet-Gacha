@@ -1,9 +1,21 @@
 <script setup>
+import { ref, onMounted } from 'vue';
+const search = ref(null);
+
+const focusInput = () => {
+  if (search.value) {
+    search.value.focus();
+  }
+};
+
+onMounted(focusInput);
+
+
 const searchValue = defineModel('searchValue')
 </script>
 
 <template>
-<input class="search" placeholder="Search" v-model="searchValue">
+<input class="search" ref="search" placeholder="Search" v-model="searchValue">
 </template>
 
 <style scoped>

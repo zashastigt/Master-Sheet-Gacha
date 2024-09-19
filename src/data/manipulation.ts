@@ -8,7 +8,7 @@ export function convertToObject(array: Object[]) {
 }
 
 export function filterObject(item: Record<string, any>, remove: string[]) {
-  return Object.keys(item).filter(key => !remove.includes(key)).reduce((obj, key) => {
+  return Object.keys(item).filter(key => !remove?.includes(key)).reduce((obj, key) => {
     return {
       ...obj, [key]: item[key]
     }
@@ -24,3 +24,6 @@ export const toPascalCase = (str: string) =>
 export function replaceChar(link: string, array: string[]) {
   return link.replace(/\{var(\d+)\}/g, (substr: string, idx: string) => array[parseInt(idx) - 1])
 }
+
+export const capitalize = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1);
