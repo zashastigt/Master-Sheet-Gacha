@@ -32,11 +32,11 @@ const typeFixWeapon = computed(() => {
 <template>
   <GachaPage
     v-if="typeFixChar"
-    :game="'Zenless'"
+    :game="'ZZZ'"
     :items="listShown ? typeFixChar : typeFixWeapon"
     :dups="store.dupsZZZ"
     :dup-letter="['R', 'C']"
-    :pity="store.pity?.Zenless"
+    :pity="store.pity?.ZZZ"
     :elements="elements"
     :sheet-elements="sheetElements"
     :groups="groups"

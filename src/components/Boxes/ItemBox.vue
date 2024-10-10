@@ -19,29 +19,6 @@ const props = defineProps({
   itemGroup: String
 })
 
-let alreadyUpdated = ref(false)
-
-onUpdated(()=>{
-  sendNewItem()
-})
-
-function sendNewItem() {
-  if (!alreadyUpdated.value && !Object.values(props.dups[props.listShown ? 'Characters' : 'Weapons']).some(item => 
-    item.name == props.item.name && item.type == props.sheetGroups[props.groups.indexOf(props.item.group)])) {
-    alreadyUpdated.value = true
-    postData({
-      level: '',
-      person: 'Zasha',
-      name: props.item.name,
-      game: props.game,
-      group: props.listShown ? 'Character' : 'Weapon',
-      element: props.sheetElements[props.elements.indexOf(props.item.element)],
-      rank: props.item.rarity,
-      path: props.sheetGroups[props.groups.indexOf(props.item.group)]
-    })
- }
-}
-
 const persons = computed(() => { 
   const defaultPersons = {}
   for (const key of Object.keys(Object.values(props.dups['Characters'])[0].CE)) {

@@ -39,6 +39,42 @@ let filterSearch =ref('')
 
 const store = useGachaStore()
 
+let alreadyUpdated = false
+
+store.$subscribe((mutation, state) => {
+  if (!alreadyUpdated && state[`dups${props.game}`] != null && Object.keys(state[`dups${props.game}`]).length !== 0) {
+    alreadyUpdated = true
+    
+    let newItems = Object.values(store.characters)
+    .filter(item => !Object.values(state[`dups${props.game}`]['Characters'])
+    .some(sheetItem => item.name == sheetItem.name && item.group == props.groups[props.sheetGroups.indexOf(sheetItem.type)]))
+    .concat(Object.values(store.weapons)
+    .filter(item => !Object.values(state[`dups${props.game}`]['Weapons'])
+    .some(sheetItem => item.name == sheetItem.name && item.group == props.groups[props.sheetGroups.indexOf(sheetItem.type)])))
+    
+    newItems.forEach((item, index) => {
+      let postItem = {
+        level: '',
+        person: 'Zasha',
+        name: item.name,
+        game: props.game,
+        rank: item.rarity,
+        path: props.sheetGroups[props.groups.indexOf(item.group)]
+      }
+
+      if (item.element != undefined) {
+        postItem['element'] = item.element
+        postItem['group'] = 'Character'
+      }
+      else {
+        postItem['group'] = 'Weapon'
+      }
+      setTimeout(() => { postData(postItem) }, index * 2000)
+    })
+  }
+
+})
+
 const list = computed(() => {
   let itemList = props.items
   let sortedList = itemList

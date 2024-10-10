@@ -117,8 +117,8 @@ export const useGachaStore = defineStore('gacha', {
       const data = await res.json()
       this.dupsStarRail = await data.StarRail
       this.dupsGenshin = await data.Genshin
-      this.dupsWuWa = await data.WutheringWaves
-      this.dupsZZZ = await data.Zenless
+      this.dupsWuWa = await data.WuWa
+      this.dupsZZZ = await data.ZZZ
       this.pity = await data.pity
     },
     async getCharacterInfo(url: string, game: string, remove: string[]) {
