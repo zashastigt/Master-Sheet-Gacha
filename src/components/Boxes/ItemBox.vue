@@ -69,7 +69,7 @@ function getItem() {
         <img class="imgItem" alt="img" :src="itemImg">
       </a>
     </div>
-    <div class="rarityStrip" :class="{rarityThreeStar: item.rarity === 3, rarityFourStar: item.rarity === 4, rarityFiveStar: item.rarity === 5}"></div>
+    <div class="rarityStrip" :class="{rarityThreeStar: item.rarity == 3, rarityFourStar: item.rarity == 4, rarityFiveStar: item.rarity == 5}"></div>
     <div class="info">
       <img v-if="listShown" class="element" alt="element" :src="itemElement">
       <img class="group" alt="group" :src="itemGroup">
