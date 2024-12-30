@@ -51,7 +51,6 @@ store.$subscribe((mutation, state) => {
     .concat(Object.values(store.weapons)
     .filter(item => !Object.values(state[`dups${props.game}`]['Weapons'])
     .some(sheetItem => item.name == sheetItem.name && item.group == props.groups[props.sheetGroups.indexOf(sheetItem.type)])))
-    
     newItems.forEach((item, index) => {
       let postItem = {
         level: '',
@@ -63,7 +62,7 @@ store.$subscribe((mutation, state) => {
       }
 
       if (item.element != undefined) {
-        postItem['element'] = item.element
+        postItem['element'] = props.sheetElements[props.elements.indexOf(item.element)]
         postItem['group'] = 'Character'
       }
       else {

@@ -7,8 +7,8 @@ import { capitalize }  from "../data/manipulation"
 const listShown = ref(true)
 const elements = ["physical", "fire", "ice", "thunder", "wind", "quantum", "imaginary"]
 const sheetElements = ["Physical", "Fire", "Ice", "Lightning", "Wind", "Quantum", "Imaginary"]
-const groups = ['priest', 'warrior', 'mage', 'shaman', 'rogue', 'warlock', 'knight']
-const sheetGroups = ['Abundance', 'Destruction', 'Erudition', 'Harmony', 'Hunt', 'Nihility', 'Preservation']
+const groups = ['priest', 'warrior', 'mage', 'shaman', 'rogue', 'warlock', 'knight', 'memory']
+const sheetGroups = ['Abundance', 'Destruction', 'Erudition', 'Harmony', 'Hunt', 'Nihility', 'Preservation', 'Remembrance']
 
 const store = useGachaStore()
 store.reset()
